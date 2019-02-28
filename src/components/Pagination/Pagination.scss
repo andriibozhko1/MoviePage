@@ -7,15 +7,24 @@
     justify-content: center;
 
     &-btn {
-      box-shadow: 0px 0px 1px black;            
       padding: 10px;
-      margin: 2px;
       cursor: pointer;
 
       &--active {
         background: #2e859e;
-        box-shadow: 0px 0px 1px#2e859e;              
         color: #fff;
+      }
+    }
+  }
+}
+@media screen and (max-width: 940px) {
+  .Pagination {
+    margin: 30px;
+
+    &__nav {
+      
+      &-btn {
+        padding: 2px;
       }
     }
   }

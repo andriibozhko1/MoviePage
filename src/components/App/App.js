@@ -10,6 +10,7 @@ export default class App extends Component {
     super(props);
 
     this.state = {
+      mobileMenuIsOpen: false,
       searchMode: false,
       items: [],
       currentPage: 1,
@@ -23,6 +24,18 @@ export default class App extends Component {
 
   componentDidMount() {
     this.getAllItems();
+  }
+
+  setYear = (year) => {
+    this.setState(prevState => {
+      prevState.year = year;
+
+      return {
+        prevState
+      }
+    }, () => {
+      this.getAllItems();
+    })
   }
 
   setValue = (query) => {
@@ -113,16 +126,26 @@ export default class App extends Component {
       });
   };
 
-  updateData = (movieGenre,year) => {    
+  setMovieGenre = (genreId) => {
     this.setState(prevState => {
-      prevState.movieGenre = movieGenre;
-      prevState.year = year;
+      prevState.movieGenre = genreId;
+      prevState.currentPage = 1;
+
+      return (
+        prevState
+      )
+    }, () => {
+      this.getAllItems()
+    })
+  }
+
+  OpenAndCloseMobileMenu = (status) => {
+    this.setState(prevState => {
+      prevState.mobileMenuIsOpen = status;
 
       return {
         prevState
       }
-    }, () => {
-      this.getAllItems();
     })
   }
 
@@ -131,12 +154,17 @@ export default class App extends Component {
     return (
       <>
         <div className="container">
-          <Header 
-            updateData={this.updateData}
+          <Header             
             setValue={this.setValue}
+            OpenAndCloseMobileMenu={this.OpenAndCloseMobileMenu}
           />
           <Main
-           items={this.state.items}/>
+           items={this.state.items}
+           setMovieGenre={this.setMovieGenre}
+           movieGenre={this.state.movieGenre}
+           setYear={this.setYear}
+           mobileMenuStatus={this.state.mobileMenuIsOpen}
+           />
           <Pagination
            quantityPages={this.state.quantityPage}
            currentPage={this.state.currentPage}
