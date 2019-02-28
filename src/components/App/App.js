@@ -14,6 +14,7 @@ export default class App extends Component {
       currentPage: 1,
       quantityItems: 0,
       quantityPage: 1000,
+      movieGenre: null,
     };
   }
 
@@ -25,7 +26,7 @@ export default class App extends Component {
 
     this.setState((prevState) => {
       prevState.currentPage = selectedPage;
-
+      
       return {
         prevState
       }
@@ -36,6 +37,7 @@ export default class App extends Component {
 
   getAllItems = () => { 
     let urlAPI = `https://api.themoviedb.org/3/discover/movie?api_key=5874acfd11651a28c55771624f7021f4&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${this.state.currentPage}`
+
     fetch(urlAPI)
       .then((response) => {
         return response.json()
@@ -57,7 +59,6 @@ export default class App extends Component {
   };
 
   render() {       
-    console.log(this.state);     
     return (
       <>
         <div className="container">
