@@ -157,6 +157,7 @@ export default class App extends Component {
           <Header             
             setValue={this.setValue}
             OpenAndCloseMobileMenu={this.OpenAndCloseMobileMenu}
+            setDefaultState={this.getAllItems}
           />
           <Main
            items={this.state.items}

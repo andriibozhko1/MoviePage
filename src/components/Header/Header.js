@@ -6,9 +6,10 @@ import menuIcon from '../../img/menu.svg'
 export default class Header extends Component {
   state = {
     settings: {                  
-      query: '',
+      query: '',      
     },
   };
+  menuStatus = false;
 
   changeQuery = (value) => {
     this.setState(({ settings }) => {
@@ -22,10 +23,14 @@ export default class Header extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <>
         <div className="header">
-          <div className="header__logo" />
+          <div
+           className="header__logo" 
+           onClick={this.props.setDefaultState}
+          />
           <div>
               <input 
               className="header__search-field" 
@@ -44,7 +49,9 @@ export default class Header extends Component {
             <button 
             className="header__find-movies-btn"
             onClick={() => { 
-              this.props.setValue(this.state.settings.query)
+              this.menuToggle.checked = false;
+              this.props.setValue(this.state.settings.query)              
+              this.props.OpenAndCloseMobileMenu(this.menuToggle.checked)
             }}>
               Search
             </button>
@@ -57,6 +64,11 @@ export default class Header extends Component {
                 name="mobileMenuIsOpen"
                 className="mobile-menu-toggler" 
                 type="checkbox"
+                ref={(element) => {
+                  if(element) {
+                    this.menuToggle = element;
+                  }
+                }}
                 onClick={(event) => {
                   this.props.OpenAndCloseMobileMenu(event.target.checked)
                 }}
