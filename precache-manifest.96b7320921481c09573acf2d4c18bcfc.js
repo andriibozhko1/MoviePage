@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "672094c1905226902bcf",
-    "url": "/MoviePage/static/css/main.13d1e974.chunk.css"
+    "revision": "36b72174b57239b84395",
+    "url": "/MoviePage/static/css/main.dad58f7b.chunk.css"
   },
   {
-    "revision": "672094c1905226902bcf",
-    "url": "/MoviePage/static/js/main.672094c1.chunk.js"
+    "revision": "36b72174b57239b84395",
+    "url": "/MoviePage/static/js/main.36b72174.chunk.js"
   },
   {
     "revision": "d9adc2e36428a8e9f05b",
@@ -20,11 +20,11 @@ self.__precacheManifest = [
     "url": "/MoviePage/static/media/menu.13c5ac79.svg"
   },
   {
-    "revision": "4b994b102163c1febfa2858eb9dee704",
-    "url": "/MoviePage/static/media/logo.4b994b10.png"
+    "revision": "4b22e9b5c57ff48e643da9b79fb9e72d",
+    "url": "/MoviePage/static/media/logo.4b22e9b5.png"
   },
   {
-    "revision": "f32a39890086b5e6c645736a9eea237f",
+    "revision": "ce539c8f8f43ec0e34038553061ab137",
     "url": "/MoviePage/index.html"
   }
 ];
