@@ -66,7 +66,7 @@ export default class SideBar extends Component {
           <div 
           className="SideBar__change-year"
           onClick={this.openDropDown}>
-             {this.state.currentYear ? this.state.currentYear : 'All times:'}
+             <div className="SideBar__change-year-title">{this.state.currentYear ? this.state.currentYear : 'All times:'}</div>
             <ul
             hidden={!this.state.dropDownIsOpen}
             className="SideBar__change-year-list">
