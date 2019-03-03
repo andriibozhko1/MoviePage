@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "ee294a0a8ca23450abb2",
-    "url": "/MoviePage/static/css/main.dad58f7b.chunk.css"
+    "revision": "6306ccc283546ed5b123",
+    "url": "/MoviePage/static/css/main.36c207e6.chunk.css"
   },
   {
-    "revision": "ee294a0a8ca23450abb2",
-    "url": "/MoviePage/static/js/main.ee294a0a.chunk.js"
+    "revision": "6306ccc283546ed5b123",
+    "url": "/MoviePage/static/js/main.6306ccc2.chunk.js"
   },
   {
     "revision": "d9adc2e36428a8e9f05b",
@@ -24,7 +24,7 @@ self.__precacheManifest = [
     "url": "/MoviePage/static/media/logo.4b22e9b5.png"
   },
   {
-    "revision": "8b52bd35f8b4beef9298002bac881bac",
+    "revision": "9d413966eeec91b519d37dde8ad0d64e",
     "url": "/MoviePage/index.html"
   }
 ];
