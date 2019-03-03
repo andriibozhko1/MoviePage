@@ -72,6 +72,20 @@ export default class App extends Component {
     ))
   }
 
+  setDefaultState = () => {
+    this.setState({
+      mobileMenuIsOpen: false,
+      searchMode: false,
+      items: [],
+      currentPage: 1,
+      quantityItems: 0,
+      quantityPage: 1000,
+      movieGenre: null,
+      year: null,  
+      query: '',    
+    }, () => this.getAllItems())
+  }
+
   findMovieByQuery = () => {
     if(this.state.query === '') {
       this.setState({
@@ -115,7 +129,7 @@ export default class App extends Component {
               setValue={this.setValue}
               query={this.state.query}
               togglerMobileMenu={this.togglerMobileMenu}
-              setDefaultState={this.getAllItems}
+              setDefaultState={this.setDefaultState}
               changeQuery={this.changeQuery}
           />
           <Main
