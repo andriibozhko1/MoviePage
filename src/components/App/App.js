@@ -26,59 +26,57 @@ export default class App extends Component {
     this.getAllItems();
   }
 
-  setYear = (year) => {
-    this.setState(prevState => {
-      prevState.year = year;
+  getAllItems = () => { 
+    let urlAPI = `https://api.themoviedb.org/3/discover/movie?api_key=5874acfd11651a28c55771624f7021f4&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${this.state.currentPage}${this.state.movieGenre ? `&with_genres=${this.state.movieGenre}` : ''}${this.state.year ? `&primary_release_year=${+this.state.year}` : ''}`
+    
+    fetch(urlAPI)
+      .then((response) => response.json())
+        .then((result) => {
+        this.setState({
+          items: result.results,
+          quantityItems: result['total_results'],
+          quantityPage: Math.min(1000, result['total_pages'])
+        }, () => {
+          window.scrollTo(0,0);
+        })
+      })
+  }
 
-      return {
-        prevState
-      }
-    }, () => {
+  setYear = (year) => {
+    this.setState({ year }, () => {
       this.getAllItems();
     })
   }
 
-  setValue = (query) => {
-    this.setState(prevState => {
-      prevState.query = query;
-      prevState.searchMode = true; 
-      prevState.currentPage = 1;
+  changeQuery = (value) => {
+    this.setState({ query: value })
+  }
 
-      return {
-        prevState
-      }
-    }, () => {      
-      this.findMovieByQuery()
-    })
+  setValue = (query) => {
+
+    this.setState({
+      query,
+      searchMode: true,
+      currentPage: 1,
+    }, () => this.findMovieByQuery())
   }
 
   setNewPage = (selectedPage) => {        
-    this.setState((prevState) => {
-      prevState.currentPage = selectedPage;
-      
-      return {
-        prevState
-      }
-    },() => {    
-      if(this.state.searchMode) {
-        this.findMovieByQuery();
-        return;
-      }  
-      this.getAllItems();      
-    })
+
+    this.setState({
+      currentPage: selectedPage
+    }, () => this.state.searchMode ? (
+      this.findMovieByQuery()
+    ) : (
+      this.getAllItems()
+    ))
   }
 
   findMovieByQuery = () => {
     if(this.state.query === '') {
-      this.setState(({ searchMode }) => {
-        searchMode = false;
-
-        return {
-          searchMode,
-        }
-      }, () => {
-        this.getAllItems()
-      })      
+      this.setState({
+        searchMode: false,
+      }, () => this.getAllItems());
 
       return;
     }    
@@ -88,92 +86,53 @@ export default class App extends Component {
       .then((response) => {
         return response.json()
       }).then((result) => {
-        this.setState((prevState) => {
-          prevState.items = result.results;
-          prevState.quantityItems = result.total_results;            
-
-          if(result.total_pages <= 1000) {            
-            prevState.quantityPage = result.total_pages;
-          } else {
-            prevState.quantityPage = 1000;
-          }
-          return (
-            prevState
-          )
-        })
+        this.setState({
+          items: result.results,
+          query: '',
+          quantityItems: result['total_results'],
+          quantityPage: Math.min(1000, result['total_pages'])
+        });
       });
   }
-
-  getAllItems = () => { 
-    let urlAPI = `https://api.themoviedb.org/3/discover/movie?api_key=5874acfd11651a28c55771624f7021f4&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${this.state.currentPage}${this.state.movieGenre ? `&with_genres=${this.state.movieGenre}` : ''}${this.state.year ? `&primary_release_year=${+this.state.year}` : ''}`
-    
-    fetch(urlAPI)
-      .then((response) => {
-        return response.json()
-      }).then((result) => {
-        this.setState((prevState) => {
-          prevState.items = result.results;
-          prevState.quantityItems = result.total_results;   
-          if(result.total_pages <= 1000) {            
-            prevState.quantityPage = result.total_pages;
-          } else {
-            prevState.quantityPage = 1000;
-          }
-          return (
-            prevState
-          )
-        })
-      });
-  };
 
   setMovieGenre = (genreId) => {
-    this.setState(prevState => {
-      prevState.movieGenre = genreId;
-      prevState.currentPage = 1;
-
-      return (
-        prevState
-      )
-    }, () => {
-      this.getAllItems()
-    })
+    this.setState({
+      movieGenre: genreId,
+      currentPage: 1,
+    }, () => this.getAllItems())
   }
 
-  OpenAndCloseMobileMenu = (status) => {
-    this.setState(prevState => {
-      prevState.mobileMenuIsOpen = status;
-
-      return {
-        prevState
-      }
+  togglerMobileMenu = (status) => {
+    this.setState({
+      mobileMenuIsOpen: status,
     })
   }
 
   render() {       
-    
     return (
-      <>
         <div className="container">
           <Header             
-            setValue={this.setValue}
-            OpenAndCloseMobileMenu={this.OpenAndCloseMobileMenu}
-            setDefaultState={this.getAllItems}
+              setValue={this.setValue}
+              query={this.state.query}
+              togglerMobileMenu={this.togglerMobileMenu}
+              setDefaultState={this.getAllItems}
+              changeQuery={this.changeQuery}
           />
           <Main
-           items={this.state.items}
-           setMovieGenre={this.setMovieGenre}
-           movieGenre={this.state.movieGenre}
-           setYear={this.setYear}
-           mobileMenuStatus={this.state.mobileMenuIsOpen}
-           />
+              movies={this.state.items}
+              setMovieGenre={this.setMovieGenre}
+              movieGenre={this.state.movieGenre}
+              setYear={this.setYear}
+              currentYear={this.state.year}
+              mobileMenuIsOpen={this.state.mobileMenuIsOpen}
+            />
           <Pagination
-           quantityPages={this.state.quantityPage}
-           currentPage={this.state.currentPage}
-           setNewPage={this.setNewPage}
+              quantityPages={this.state.quantityPage}
+              currentPage={this.state.currentPage}
+              setNewPage={this.setNewPage}
            />
            Footer
         </div>
-      </>
     );
   }
 }

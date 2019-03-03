@@ -2,90 +2,61 @@ import React, { Component } from "react";
 import "./Pagination.scss";
 
 export default class Pagination extends Component {
-  paginationItems = [];
-
-  createPaginationBtns = () => {
-    this.paginationItems = [];
-    for (let i = this.props.currentPage; i < this.props.currentPage + 5; i++) {
-      this.paginationItems.push(i);
-    }
-    for (let i = this.props.currentPage; i >= this.props.currentPage - 5; i--) {
-      this.paginationItems.unshift(i);
-    }
-
-    this.paginationItems = this.paginationItems.filter((item, index) => {
-      if (
-        this.paginationItems.indexOf(item) === index &&
-        item > 1 &&
-        item < this.props.quantityPages - 1
-      ) {
-        return true;
-      }
-    });
+  goPrev = () => {
+    const page = Math.max(1, this.props.currentPage - 1);
+    this.props.setNewPage(page);
   };
 
-  currentPaginatonBtns = value => {
-    switch (value) {
-      case -1:
-        if (this.props.currentPage - 1 !== 0) {
-          this.props.setNewPage(this.props.currentPage - 1);
-        }
-        break;
-
-      case 1:
-        if (this.props.currentPage + 1 <= this.props.quantityPages) {
-          this.props.setNewPage(this.props.currentPage + 1);
-        }
-        break;
-
-        default:
-    }
+  goNext = () => {
+    const page = Math.min(this.props.quantityPages, this.props.currentPage + 1);
+    this.props.setNewPage(page);
   };
 
   render() {
-    this.createPaginationBtns();
+    const buttons = [];
+    const start = Math.max(1, this.props.currentPage - 5);
+    const end = Math.min(this.props.quantityPages, this.props.currentPage + 5);
+
+    for (let i = start; i < end; i++) {
+      buttons.push(i);
+    }
+
     return (
       <>
         <div className="Pagination">
           <div className="Pagination__nav">
-            <div
-              className="Pagination__nav-btn"
-              onClick={() => {
-                this.currentPaginatonBtns(-1);
-              }}
-            >
-              Prev
+            <div className="Pagination__nav-btn" onClick={() => this.goPrev()}>
+              {" "}
+              Prev{" "}
             </div>
-            <div
-              className={`Pagination__nav-btn ${
-                this.props.currentPage === 1
-                  ? "Pagination__nav-btn--active"
-                  : ""
-              }`}
-              onClick={() => {
-                this.props.setNewPage(1);
-              }}
-            >
-              1
-            </div>
-
-            {this.props.currentPage >= 5 ? (
-              <div className="Pagination__nav-btn">...</div>
+            {this.props.currentPage >= 8 ? (
+              <>
+                <div
+                  className={`Pagination__nav-btn ${
+                    this.props.currentPage === 1
+                      ? "Pagination__nav-btn--active"
+                      : ""
+                  }`}
+                  onClick={() => this.props.setNewPage(1)}
+                >
+                  1
+                </div>
+                <div className="Pagination__nav-btn">...</div>
+              </>
             ) : (
               ""
             )}
-            {this.paginationItems.map((item, index) => {
+
+            {buttons.map(item => {
               return (
                 <div
-                  key={index}
+                  key={item}
                   className={`Pagination__nav-btn ${
                     this.props.currentPage === item
                       ? "Pagination__nav-btn--active"
                       : ""
                   }`}
-                  onClick={() => {
-                    this.props.setNewPage(item);
-                  }}
+                  onClick={() => this.props.setNewPage(item)}
                 >
                   {item}
                 </div>
@@ -99,24 +70,17 @@ export default class Pagination extends Component {
             )}
 
             <div
-              hidden={this.paginationItems.length === 0}
+              hidden={buttons.length === 0}
               className={`Pagination__nav-btn ${
                 this.props.currentPage === this.props.quantityPages
                   ? "Pagination__nav-btn--active"
                   : ""
               }`}
-              onClick={() => {
-                this.props.setNewPage(this.props.quantityPages);
-              }}
+              onClick={() => this.props.setNewPage(this.props.quantityPages)}
             >
               {this.props.quantityPages}
             </div>
-            <div
-              className="Pagination__nav-btn"
-              onClick={() => {
-                this.currentPaginatonBtns(1);
-              }}
-            >
+            <div className="Pagination__nav-btn" onClick={() => this.goNext()}>
               Next
             </div>
           </div>

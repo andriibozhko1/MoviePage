@@ -1,29 +1,12 @@
 import React, { Component } from "react";
-import "./Header.scss";
+import SearchField from './SearchField'
 import menuIcon from '../../img/menu.svg'
+import "./Header.scss";
+
 
 
 export default class Header extends Component {
-  state = {
-    settings: {                  
-      query: '',      
-    },
-  };
-  menuStatus = false;
-
-  changeQuery = (value) => {
-    this.setState(({ settings }) => {
-      return {
-        settings: {
-          ...settings,
-          query: value,
-        }
-      }
-    })
-  }
-
-  render() {
-    console.log(this.props)
+  render() {    
     return (
       <>
         <div className="header">
@@ -32,29 +15,14 @@ export default class Header extends Component {
            onClick={this.props.setDefaultState}
           />
           <div>
-              <input 
-              className="header__search-field" 
-              type="text"
-              value={this.state.settings.query}
-              placeholder="Find something ......."
-              onChange={(event) => {
-                this.changeQuery(event.target.value)
-              }}
-              onKeyPress={(key) => { 
-                if(key.key === 'Enter') {
-                  this.props.setValue(this.state.settings.query)
-                }
-              }}
-              />
-            <button 
-            className="header__find-movies-btn"
-            onClick={() => { 
-              this.menuToggle.checked = false;
-              this.props.setValue(this.state.settings.query)              
-              this.props.OpenAndCloseMobileMenu(this.menuToggle.checked)
-            }}>
-              Search
-            </button>
+          <SearchField 
+            changeQuery={this.changeQuery}
+            menuToggler={this.menuToggler}
+            togglerMobileMenu={this.props.togglerMobileMenu}
+            setValue={this.props.setValue}
+            query={this.props.query}
+            changeQuery={this.props.changeQuery}
+          />
           </div>
           <div >
               
@@ -66,11 +34,11 @@ export default class Header extends Component {
                 type="checkbox"
                 ref={(element) => {
                   if(element) {
-                    this.menuToggle = element;
+                    this.menuToggler = element;
                   }
                 }}
                 onClick={(event) => {
-                  this.props.OpenAndCloseMobileMenu(event.target.checked)
+                  this.props.togglerMobileMenu(event.target.checked)
                 }}
                 />
               </label>

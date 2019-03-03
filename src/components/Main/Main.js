@@ -8,23 +8,22 @@ export default class Main extends Component {
     return (
       <div className="Main">
           <SideBar 
-          setMovieGenre={this.props.setMovieGenre} 
-          movieGenre={this.props.movieGenre}
-          setYear={this.props.setYear}
-          mobileMenuStatus={this.props.mobileMenuStatus}
+            setMovieGenre={this.props.setMovieGenre} 
+            movieGenre={this.props.movieGenre}
+            setYear={this.props.setYear}
+            currentYear={this.props.currentYear}
+            mobileMenuIsOpen={this.props.mobileMenuIsOpen}
           />
         <div className="Main__movies">
-          <ul className="Main__list">
-            {this.props.items.length <= 0 ? (
-              <div className="Main__no-items-error">
-                Sorry, but your search results 0 =(
-              </div>
-            ) : (
-              this.props.items.map(item => {
-                return <MainItem key={item.id} data={item} />;
-              })
-            )}
-          </ul>
+          {this.props.movies.length <= 0 ? (
+            <div className="Main__no-items-error">
+               Sorry, but your search results 0.
+            </div>
+          ):(
+            <ul className="Main__list">
+          {this.props.movies.map(movie => <MainItem key={movie.id} data={movie} />)}
+            </ul>
+          )}
         </div>
       </div>
     );
