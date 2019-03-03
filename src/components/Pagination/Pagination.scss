@@ -1,0 +1,31 @@
+.Pagination {
+  margin: 50px;
+  font-family: sans-serif;
+
+  &__nav {
+    display: flex;
+    justify-content: center;
+
+    &-btn {
+      padding: 10px;
+      cursor: pointer;
+
+      &--active {
+        background: #2e859e;
+        color: #fff;
+      }
+    }
+  }
+}
+@media screen and (max-width: 940px) {
+  .Pagination {
+    margin: 30px;
+
+    &__nav {
+      
+      &-btn {
+        padding: 2px;
+      }
+    }
+  }
+}
