@@ -1,0 +1,21 @@
+.Footer {
+  padding: 20px;
+  font-family: sans-serif;
+  background: #303030;  
+  color: #fff;
+
+  &__link-list {
+    font-weight: 100;
+    padding: 20px;
+    font-size: 18px;    
+  }
+
+  &__link a{
+    color: #2e859e;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
